@@ -93,4 +93,54 @@ from __future__ import annotations  # игнорируйте эту строку
 
 
 class Complex:
-    pass  # удалите эту строку и введите свое решение
+    def __init__(self, real=0, imag=0):
+        self.real = real
+        self.imag = imag
+
+    def __repr__(self):
+        if self.imag >= 0:
+            return f"{self.real}+{self.imag}i"
+        else:
+            return f"{self.real}{self.imag}i"
+
+    def __add__(self, other):
+        return Complex(self.real + other.real, self.imag + other.imag)
+
+    def __sub__(self, other):
+        return Complex(self.real - other.real, self.imag - other.imag)
+
+    def __mul__(self, other):
+        return Complex(
+            self.real * other.real - self.imag * other.imag,
+            self.real * other.imag + self.imag * other.real,)
+
+    def __truediv__(self, other):
+        denominator = other.real ** 2 + other.imag ** 2
+        real_part = (self.real * other.real + self.imag * other.imag) / denominator
+        imag_part = (self.imag * other.real - self.real * other.imag) / denominator
+        return Complex(real_part, imag_part)
+
+    def __eq__(self, other):
+        return self.real == other.real and self.imag == other.imag
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+# Примеры использования
+
+c1 = Complex(imag=-1)
+print(c1)  # 0-1i
+c2 = Complex(real=4, imag=2)
+print(c2)  # 4+2i
+
+# Арифметические операции
+
+result1 = Complex(3, 4) - 0.5
+print(result1)  # 2.5+4i
+result2 = Complex(5, 1) * Complex(0.4, 0.3)
+print(result2)  # 1.7+1.9i
+
+# Проверка равенства
+
+print(7.7 == Complex(real=7.7))  # True
+print(-1 == Complex(real=-1, imag=4))  # False
